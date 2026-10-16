@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un jardín para Dadita ♡</title>
+
+<style>
+:root {
+  --lila: #b99bce;
+  --rosa: #e9c5d7;
+  --verde: #82977b;
+  --tinta: #62516a;
+  --fondo: #fffafd;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top, #f0e5f7, transparent 60%),
+              linear-gradient(#fffafd, #f9f0f8);
+  color: var(--tinta);
+  font-family: Georgia, serif;
+  text-align: center;
+}
+
+button { font: inherit; }
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 32px 18px 40px;
+  animation: appear .6s ease both;
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #a58bb2;
+}
+
+h1 {
+  font-size: clamp(38px, 10vw, 56px);
+  font-weight: normal;
+  line-height: 1.08;
+  margin: 18px 0 12px;
+}
+
+h2 {
+  font-size: clamp(28px, 7vw, 37px);
+  font-weight: normal;
+  margin: 12px 0;
+}
+
+p { line-height: 1.9; }
+
+.subtitle {
+  font-style: italic;
+  font-size: 20px;
+  color: #9c83ab;
+}
+
+.intro {
+  max-width: 350px;
+  margin: 20px auto;
+  color: #907f95;
+  font-size: 14px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 12px 4px 0;
+  padding: 14px 23px;
+  border: 1px solid #d4bddf;
+  border-radius: 50px;
+  background: #eee2f5;
+  color: #725982;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  transition: .25s;
+}
+
+.btn:active { transform: scale(.97); }
+
+.btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.btn.secondary { background: #fffafd; }
+
+.ornament {
+  color: #c5a6d5;
+  font-size: 25px;
+  letter-spacing: 9px;
+  margin: 25px 0;
+}
+
+.welcome-art {
+  margin: 28px auto;
+  font-size: 43px;
+  letter-spacing: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Jardín y árbol */
+
+.garden {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  height: 390px;
+  flex-shrink: 0;
+  margin: 22px auto 12px;
+  border-radius: 45% 45% 20px 20px;
+  background: radial-gradient(
+    ellipse,
+    #f0e5f1aa,
+    transparent 70%
+  );
+}
+
+.tree {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.branch {
+  fill: none;
+  stroke: #85987c;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.leaf { fill: #a8b99b; }
+
+.flower {
+  position: absolute;
+  width: 53px;
+  height: 57px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 3px 3px #a78ab333);
+}
+
+.flower svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.flower .bloom {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform .8s ease;
+}
+
+.flower.closed .bloom {
+  transform: scale(.45) rotate(-15deg);
+}
+
+.flower.open .bloom {
+  transform: scale(1);
+}
+
+.petal {
+  fill: #c4a6d8;
+  stroke: #a98bc1;
+  stroke-width: .8;
+}
+
+.petal.white {
+  fill: #fffdfd;
+  stroke: #d9c5e4;
+}
+
+.petal.pink {
+  fill: #e9c3d9;
+  stroke: #d5a7c7;
+}
+
+.center { fill: #e9ce83; }
+
+.flower.open::after {
+  content: "♡";
+  position: absolute;
+  top: -13px;
+  right: -5px;
+  font-size: 15px;
+  color: #c69abd;
+}
+
+.ground {
+  position: absolute;
+  bottom: 35px;
+  left: 9%;
+  right: 9%;
+  height: 13px;
+  border-bottom: 2px solid #cdbcd0;
+  border-radius: 50%;
+}
+
+
+/* Gatitos originales de Dadita y Doui */
+.kittens {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  z-index: 3;
+}
+
+.kitten-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  animation: kitten-breathe 3s ease-in-out infinite;
+}
+
+.kitten-wrap:nth-child(3) {
+  animation-delay: -1.5s;
+}
+
+.kitten {
+  position: relative;
+  width: 77px;
+  height: 62px;
+}
+
+.cat-body {
+  position: absolute;
+  bottom: 0;
+  left: 11px;
+  width: 57px;
+  height: 37px;
+  border-radius: 45% 48% 38% 40%;
+  background: var(--cat);
+}
+
+.cat-head {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  top: 2px;
+  width: 48px;
+  height: 42px;
+  border-radius: 46% 46% 48% 48%;
+  background: var(--cat);
+}
+
+.ear {
+  position: absolute;
+  z-index: -1;
+  top: -8px;
+  width: 20px;
+  height: 24px;
+  background: var(--cat);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.ear.left {
+  left: 0;
+  transform: rotate(-14deg);
+}
+
+.ear.right {
+  right: 0;
+  transform: rotate(14deg);
+}
+
+.inner-ear {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  width: 10px;
+  height: 13px;
+  background: #e5b2c8;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.eye {
+  position: absolute;
+  top: 17px;
+  width: 5px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--eyes, #7a9e64);
+}
+
+.eye.left { left: 12px; }
+.eye.right { right: 12px; }
+
+.nose {
+  position: absolute;
+  left: 22px;
+  top: 25px;
+  width: 5px;
+  height: 4px;
+  background: #d99fb8;
+  border-radius: 50%;
+}
+
+.muzzle {
+  position: absolute;
+  top: 25px;
+  width: 10px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffffffa8;
+}
+
+.muzzle.left { left: 13px; }
+.muzzle.right { right: 13px; }
+
+.whiskers {
+  position: absolute;
+  top: 28px;
+  width: 15px;
+  height: 1px;
+  background: #b9aab8;
+}
+
+.whiskers.left {
+  left: -8px;
+  transform: rotate(8deg);
+}
+
+.whiskers.right {
+  right: -8px;
+  transform: rotate(-8deg);
+}
+
+.tail {
+  position: absolute;
+  z-index: -1;
+  right: -1px;
+  bottom: 19px;
+  width: 22px;
+  height: 23px;
+  border: 5px solid var(--cat);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  transform: rotate(22deg);
+}
+
+.cat-name {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #927ca0;
+}
+
+.cat-name strong { font-weight: 600; }
+
+@keyframes kitten-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.heart {
+  color: #d6a3c3;
+  font-size: 19px;
+  margin-bottom: 18px;
+  animation: beat 1.5s infinite;
+}
+
+.flower-message {
+  min-height: 82px;
+  max-width: 360px;
+  margin: 10px auto 14px;
+  padding: 15px 18px;
+  border: 1px solid #eaddec;
+  border-radius: 17px;
+  background: #ffffffb8;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #806c89;
+}
+
+.progress {
+  font-family: Arial, sans-serif;
+  color: #a38bad;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin: 12px;
+}
+
+.small-note {
+  color: #a28fa6;
+  font: 11px/1.8 Arial, sans-serif;
+}
+
+/* Contador */
+
+.counter-card {
+  margin: 25px auto;
+  padding: 24px 12px;
+  border: 1px solid #eaddec;
+  border-radius: 22px;
+  background: #ffffffb8;
+  box-shadow: 0 12px 35px #a68bb314;
+}
+
+.counter-title { font-size: 24px; }
+
+.counter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.unit {
+  padding: 13px 2px;
+  background: #f5edf8;
+  border-radius: 12px;
+}
+
+.unit strong {
+  display: block;
+  font-size: clamp(23px, 6vw, 31px);
+  font-weight: normal;
+  color: #9274a5;
+}
+
+.unit span {
+  display: block;
+  font: 9px Arial, sans-serif;
+  color: #a18aa9;
+}
+
+/* Sobre y carta */
+
+.envelope {
+  width: 155px;
+  height: 110px;
+  margin: 35px auto 25px;
+  display: grid;
+  place-items: center;
+  background: #e8d5ed;
+  border: 1px solid #d2b8dc;
+  border-radius: 5px;
+  font-size: 43px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px #9b7caa20;
+}
+
+.envelope span {
+  position: relative;
+  z-index: 1;
+  margin-top: 15px;
+}
+
+.letter {
+  display: none;
+  text-align: left;
+  padding: 24px 20px;
+  margin: 25px auto;
+  background: #fffefc;
+  border: 1px solid #ebddeb;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px #a68bb314;
+}
+
+.letter.show {
+  display: block;
+  animation: appear .8s ease both;
+}
+
+.letter h2 {
+  text-align: center;
+  font-size: 29px;
+}
+
+.letter p {
+  white-space: pre-line;
+  font-size: 17px;
+  line-height: 1.9;
+  color: #705d76;
+}
+
+.signature {
+  text-align: right;
+  font-style: italic;
+  font-size: 21px;
+  color: #a083b1;
+  line-height: 1.8;
+}
+
+.music-control {
+  position: fixed;
+  z-index: 20;
+  top: 12px;
+  right: 12px;
+  border: 1px solid #dfcde7;
+  border-radius: 30px;
+  padding: 10px 13px;
+  background: #fffafde8;
+  color: #806a8b;
+  font: 11px Arial, sans-serif;
+  cursor: pointer;
+}
+
+.footer {
+  margin: 30px auto 0;
+  color: #b49abf;
+  font-style: italic;
+  font-size: 16px;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@media (max-width: 380px) {
+  .garden { height: 390px; }
+  .flower { width: 45px; height: 49px; }
+  .screen { padding-left: 14px; padding-right: 14px; }
+}
+/* Corrección de distribución del jardín */
+#garden .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+#garden .eyebrow,
+#garden h2,
+#garden .intro,
+#garden .progress,
+#garden .flower-message,
+#garden .small-note,
+#garden #gardenContinue,
+#garden .footer {
+  position: relative;
+  flex-shrink: 0;
+}
+
+#garden h2 {
+  margin: 12px 0;
+}
+
+#garden .intro {
+  margin: 12px auto;
+}
+
+/* Corrección del espacio del jardín */
+#garden .garden {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 430px;
+  height: 390px;
+  flex: 0 0 390px;
+  margin: 20px auto 15px;
+}
+
+#garden .progress,
+#garden .flower-message,
+#garden .small-note,
+#garden #gardenContinue,
+#garden .footer {
+  position: static;
+  flex-shrink: 0;
+}
+
+#garden .progress {
+  width: 100%;
+  margin: 12px auto;
+  line-height: 1.8;
+}
+
+#garden .flower-message {
+  width: 100%;
+  min-height: 82px;
+  margin: 8px auto 14px;
+  padding: 15px 18px;
+  line-height: 1.8;
+}
+
+#garden .small-note {
+  width: 100%;
+  margin: 8px auto 14px;
+  line-height: 1.8;
+}
+
+#garden #gardenContinue {
+  align-self: center;
+  margin: 12px auto;
+}
+
+#garden .footer {
+  width: 100%;
+  margin: 24px auto 0;
+  line-height: 1.8;
+}
+
+
+.flower svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.flower .petal {
+  fill: #c8a6e8;
+  stroke: #9f78c7;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.flower .petal.white {
+  fill: #fffafd;
+  stroke: #d8c2e9;
+}
+
+.flower .petal.pink {
+  fill: #e9b9dc;
+  stroke: #ca8ebd;
+}
+
+.flower .stamen {
+  fill: none;
+  stroke: #b77c2b;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.flower .pollen {
+  fill: #f1c85b;
+  stroke: #bd852d;
+  stroke-width: .7;
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="music-control" id="musicButton">
+  ♫ Activar música
+</button>
+
+
+<audio id="backgroundMusic" loop preload="none">
+  <source src="timeless.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- PANTALLA 1: BIENVENIDA -->
+<section class="screen active" id="welcome">
+  <div class="content">
+    <div class="eyebrow">Un pequeño regalo para ti</div>
+
+    <div class="welcome-art">♡ 🌷 ♡</div>
+
+    <h1>Tengo algo<br>para ti, Dadita</h1>
+
+    <p class="subtitle">De mí para mi persona favorita.</p>
+
+    <p class="intro">
+      Preparé un pequeño rincón para nosotros.
+      No tienes que descubrirlo todo de golpe;
+      solo quiero que lo recorras conmigo,
+      flor por flor.
+    </p>
+
+    <div class="ornament">✿ ♡ ✿</div>
+
+    <button class="btn" onclick="goTo('garden')">
+      Entrar a nuestro jardín ♡
+    </button>
+  </div>
+</section>
+
+<!-- LA PARTE 2 CONTINÚA AQUÍ -->
+
+<section class="screen" id="garden">
+  <div class="content">
+    <div class="eyebrow">Capítulo I · Nuestro pequeño mundo</div>
+    <h2>Un jardín para ti</h2>
+    <p class="intro">
+      Cada lirio guarda algo que quiero decirte.
+      Toca cada flor para descubrirlo.
+    </p>
+
+    <div class="garden">
+      <svg class="tree" viewBox="0 0 430 390" aria-hidden="true">
+        <path class="branch" d="M215 292 C211 230 220 183 215 125
+          M215 215 C176 185 142 156 100 130
+          M215 195 C260 165 290 140 329 111
+          M215 158 C184 128 170 99 166 69
+          M216 145 C245 116 260 87 263 58
+          M180 187 C155 180 126 182 105 170
+          M252 171 C280 176 308 168 329 151" />
+        <path class="leaf" d="M174 199 Q140 169 124 185 Q147 210 174 199Z"/>
+        <path class="leaf" d="M252 184 Q282 153 300 168 Q281 194 252 184Z"/>
+        <path class="leaf" d="M194 147 Q166 121 149 132 Q165 157 194 147Z"/>
+        <path class="leaf" d="M234 132 Q260 102 278 115 Q262 143 234 132Z"/>
+        <path class="leaf" d="M215 230 Q181 207 166 222 Q187 244 215 230Z"/>
+        <path class="leaf" d="M218 250 Q247 224 265 239 Q245 261 218 250Z"/>
+      </svg>
+
+      
+<button class="flower closed" style="left:23%;top:34%"
+  data-message="Desde que volviste a mi vida, tengo nuevas razones para sonreír."
+  aria-label="Primer lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:43%;top:19%"
+  data-message="No importa cuánto tiempo pase: siempre volvería a elegirte, en cada universo, en cada vida."
+  aria-label="Segundo lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal white" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal white" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal white" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal white" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal white" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal white" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:69%;top:31%"
+  data-message="Me haces feliz de una manera que a veces no sé explicar con palabras. "
+  aria-label="Tercer lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal pink" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal pink" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal pink" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal pink" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal pink" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal pink" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:16%;top:55%"
+  data-message="Gracias por regresar, por quedarte y por querer intentarlo una vez más conmigo. gracias por existir,por no irte a pesar de que todo pesaba para ti, gracias."
+  aria-label="Cuarto lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal white" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal white" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal white" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal white" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal white" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal white" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:37%;top:43%"
+  data-message="Incluso en mis días difíciles, tu compañía sigue siendo uno de mis lugares favoritos."
+  aria-label="Quinto lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:81%;top:53%"
+  data-message="mis ojos siempre estarán puestos en ti, no importa cuantos ojos tenga sobre mí ni cuanto tiempo pasé, mi cuerpo, mi alma y mi mente te pertenecen"
+  aria-label="Sexto lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal pink" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal pink" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal pink" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal pink" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal pink" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal pink" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:56%;top:55%"
+  data-message="contigo imagino una familia,un pequeño doui y una dadita; contigo solo sueño con ese futuro"
+  aria-label="Séptimo lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal white" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal white" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal white" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal white" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal white" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal white" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+<button class="flower closed" style="left:64%;top:72%"
+  data-message="Este es apenas nuestro primer mes desde que regresamos y quiero llenar contigo muchos más recuerdos, abrazos y días felices. "
+  aria-label="Octavo lirio">
+  <svg viewBox="0 0 100 100">
+    <g class="bloom">
+      <path class="petal" d="M50 60 C35 43 28 20 48 5 C62 25 61 44 50 60Z"/>
+      <path class="petal" d="M48 61 C25 51 8 35 16 18 C37 27 47 43 48 61Z"/>
+      <path class="petal" d="M52 61 C75 51 92 35 84 18 C63 27 53 43 52 61Z"/>
+      <path class="petal" d="M48 62 C25 62 8 54 5 39 C27 38 42 48 48 62Z"/>
+      <path class="petal" d="M52 62 C75 62 92 54 95 39 C73 38 58 48 52 62Z"/>
+      <path class="petal" d="M50 62 C39 48 38 34 50 20 C62 36 61 49 50 62Z"/>
+      <path class="stamen" d="M46 59 L36 43 M50 59 L50 39 M54 59 L65 43"/>
+      <circle class="pollen" cx="36" cy="43" r="3"/>
+      <circle class="pollen" cx="50" cy="39" r="3"/>
+      <circle class="pollen" cx="65" cy="43" r="3"/>
+    </g>
+  </svg>
+</button>
+
+
+      <div class="ground"></div>
+
+
+<div class="kittens">
+
+  <!-- Dadita: gatita blanca de ojos verdes -->
+  <div class="kitten-wrap">
+    <div class="kitten" style="--cat:#fffdfb;--eyes:#6d9b61">
+      <div class="tail"></div>
+      <div class="cat-body"></div>
+      <div class="cat-head">
+        <div class="ear left"><div class="inner-ear"></div></div>
+        <div class="ear right"><div class="inner-ear"></div></div>
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="muzzle left"></div>
+        <div class="muzzle right"></div>
+        <div class="nose"></div>
+        <div class="whiskers left"></div>
+        <div class="whiskers right"></div>
+      </div>
+    </div>
+    <div class="cat-name"><strong>Dadita</strong> ♡</div>
+  </div>
+
+  <div class="heart">♥</div>
+
+  <!-- Doui: gatito negro -->
+  <div class="kitten-wrap">
+    <div class="kitten" style="--cat:#49404f;--eyes:#d6bd79">
+      <div class="tail"></div>
+      <div class="cat-body"></div>
+      <div class="cat-head">
+        <div class="ear left"><div class="inner-ear"></div></div>
+        <div class="ear right"><div class="inner-ear"></div></div>
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="muzzle left"></div>
+        <div class="muzzle right"></div>
+        <div class="nose"></div>
+        <div class="whiskers left"></div>
+        <div class="whiskers right"></div>
+      </div>
+    </div>
+    <div class="cat-name"><strong>Doui</strong> ♡</div>
+  </div>
+
+</div>
+
+</div> <!-- Cierra el jardín -->
+
+<div class="progress" id="progress">0 DE 8 LIRIOS DESCUBIERTOS</div>
+
+    <div class="flower-message" id="flowerMessage">
+      Elige un lirio y descubre lo que guarda para ti. 
+    </div>
+
+    <p class="small-note">
+      Puedes tocar las flores en el orden que quieras.
+    </p>
+
+    <button class="btn" id="gardenContinue" disabled
+      onclick="goTo('month')">
+      Continuar nuestra historia ♡
+    </button>
+
+    <div class="footer">Un lirio por cada cosa que quiero decirte.</div>
+  </div>
+</section>
+
+<!-- PANTALLA 3: NUESTRO PRIMER MES -->
+<section class="screen" id="month">
+  <div class="content">
+    <div class="eyebrow">Capítulo II · Desde el 16 de septiembre de 2026</div>
+
+    <div class="welcome-art">♡ 🌷 🐈‍⬛</div>
+
+    <h1>Un mes<br>contigo</h1>
+
+    <p class="subtitle">Y todo lo bonito que aún nos espera.</p>
+
+    <div class="counter-card">
+      <div class="counter-title">Nuestra historia volvió a comenzar …</div>
+      <p class="small-note">16 de septiembre de 2026</p>
+
+      <div class="counter">
+        <div class="unit">
+          <strong id="days">0</strong>
+          <span>DÍAS</span>
+        </div>
+        <div class="unit">
+          <strong id="hours">0</strong>
+          <span>HORAS</span>
+        </div>
+        <div class="unit">
+          <strong id="minutes">0</strong>
+          <span>MINUTOS</span>
+        </div>
+        <div class="unit">
+          <strong id="seconds">0</strong>
+          <span>SEGUNDOS</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="intro">
+      No sé cuántos días nos esperan, pero sí sé que quiero
+      seguir compartiéndolos contigo, mi amor.
+    </p>
+
+    <div class="ornament">♡ ✿ ♡</div>
+
+    <button class="btn" onclick="goTo('envelope')">
+      Hay algo más para ti…
+    </button>
+
+    <div class="footer">Tu Loui, hoy y en cada vida. ♡</div>
+  </div>
+</section>
+
+<!-- PANTALLA 4: LA CARTA -->
+<section class="screen" id="envelope">
+  <div class="content">
+    <div class="eyebrow">Capítulo III · Algo que escribí para ti</div>
+
+    <h1>Para mi<br>Dadita</h1>
+
+    <p class="subtitle">Con todo lo que a veces no sé cómo decir.</p>
+
+    <button class="envelope" id="openLetter" aria-label="Abrir la carta">
+      <span>💌</span>
+    </button>
+
+    <p class="intro" id="envelopeHint">
+      Toca el sobre, mi amor. Esta última parte es para ti.
+    </p>
+
+    <article class="letter" id="letter">
+      <h2>Feliz primer mes, amor mío ♡</h2>
+
+      <p>Este es el tiempo en el que hemos estado compartiendo momentos juntos.
+
+Un mes parece poco, pero a tu lado ha sido el mejor mes de mi existencia, pues desde que regresaste y aceptaste de nuevo ser mi novia (esposa casi), no he dejado de sonreír.
+
+Y aunque a veces los días sean difíciles, y durante ese tiempo haya habido otros en los que parecía un niño triste esperando tu llegada, siempre tu compañía me hace muy feliz.
+
+tengo tanto que decir, pero mi dadita, ¿qué no te he dicho ya? eres el amor de mi vida, contigo deseo estar y sostener fuerte tu manita cada que sientas que algo te lastima, quiero ser tu refugio, tu hogar; ese lugar dónde siempre desees regresar.
+
+
+Te extrañé, te elegí y volvería a elegirte. En cada vida, en cada universo, volvería a ti.
+
+Feliz primer mes, mi amor. Que este sea el primero de muchísimos que todavía nos esperan.</p>
+
+      <div class="signature">
+        <br>
+        tu Loui 
+      </div>
+    </article>
+
+    <button class="btn secondary" onclick="goTo('welcome')">
+      Volver al principio ♡
+    </button>
+
+    <div class="footer">Tú y yo, mi lugar favorito. ♡</div>
+  </div>
+</section>
+
+<!-- LA PARTE 3 CONTINÚA AQUÍ -->
+
+<script>
+/* CAMBIAR DE PANTALLA */
+function goTo(screenId) {
+  document.querySelectorAll(".screen").forEach(function(screen) {
+    screen.classList.remove("active");
+  });
+
+  const nextScreen = document.getElementById(screenId);
+
+  if (nextScreen) {
+    nextScreen.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+/* LIRIOS INTERACTIVOS */
+const flowers = document.querySelectorAll(".flower");
+const flowerMessage = document.getElementById("flowerMessage");
+const progress = document.getElementById("progress");
+const gardenContinue = document.getElementById("gardenContinue");
+
+const openedFlowers = new Set();
+
+flowers.forEach(function(flower, index) {
+  flower.addEventListener("click", function() {
+    const message = flower.dataset.message;
+
+    flower.classList.remove("closed");
+    flower.classList.add("open");
+
+    openedFlowers.add(index);
+
+    flowerMessage.textContent = message;
+    progress.textContent =
+      openedFlowers.size + " DE 8 LIRIOS DESCUBIERTOS";
+
+    if (openedFlowers.size === flowers.length) {
+      gardenContinue.disabled = false;
+      gardenContinue.textContent = "Descubrir nuestro primer mes";
+      flowerMessage.textContent =
+        "Abriste todos los lirios, mi amor. Cada uno guardaba una pequeña parte de lo que siento por ti. Ahora hay algo más esperándote.";
+    }
+  });
+});
+
+/* CONTADOR DESDE EL 16 DE SEPTIEMBRE DE 2026
+   Se toma la medianoche como hora de inicio. */
+const startDate = new Date(2026, 8, 16, 0, 0, 0);
+
+function updateCounter() {
+  const now = new Date();
+  let difference = now.getTime() - startDate.getTime();
+
+  if (difference < 0) {
+    difference = 0;
+  }
+
+  const totalSeconds = Math.floor(difference / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+}
+
+updateCounter();
+setInterval(updateCounter, 1000);
+
+/* ABRIR LA CARTA */
+const openLetterButton = document.getElementById("openLetter");
+const letter = document.getElementById("letter");
+const envelopeHint = document.getElementById("envelopeHint");
+
+openLetterButton.addEventListener("click", function() {
+  letter.classList.add("show");
+  openLetterButton.style.display = "none";
+  envelopeHint.textContent =
+    "Cada palabra es para ti, mi Dadita bonita. ♡";
+
+  letter.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+});
+
+/* MÚSICA OPCIONAL */
+const music = document.getElementById("backgroundMusic");
+const musicButton = document.getElementById("musicButton");
+
+let musicPlaying = false;
+
+musicButton.addEventListener("click", async function() {
+  if (!musicPlaying) {
+    try {
+      await music.play();
+      musicPlaying = true;
+      musicButton.textContent = "♫ Silenciar música";
+    } catch (error) {
+      musicButton.textContent = "No se encontró melodia.mp3";
+    }
+  } else {
+    music.pause();
+    musicPlaying = false;
+    musicButton.textContent = "♫ Activar música";
+  }
+});
+
+music.addEventListener("error", function() {
+  if (!musicPlaying) {
+    musicButton.textContent = "♫ Música no disponible";
+  }
+});
+</script>
+
+</body>
+</html>
